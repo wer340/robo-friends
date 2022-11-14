@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'tachyons'
-import Hello from './hello';
-import App from './app';
+import Hello from './components/hello';
+import App from './containers/app';
 
 import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
