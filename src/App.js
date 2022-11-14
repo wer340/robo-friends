@@ -1,31 +1,48 @@
 import React,{Component} from "react";
-import {List} from './list';
 import Cardlist from './cardlist';
 import SearchBox from './searchbox';
+
 
 class App extends Component{
 constructor(){
     super()
     this.state={
-        list:List,
+        list:[],
         searchfield:''
     }
-
+console.log('constructor')
 }
 onSearchChange =(event)=>{
      this.setState({searchfield: event.target.value}) 
 }
+componentDidMount(){
+    //this.setState({list:List})
+    fetch('https://jsonplaceholder.cypress.io/users').then(results=>results.json()).then(users=> this.setState({list:users}))
+    
+    console.log('this.componentDidMount')
+}
+
     render(){
+        
         const filterRobo=this.state.list.filter(item=>{
             return item.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
         })
-        return (
-            <div className="tc"> 
-                <SearchBox  searchText={this.onSearchChange} />
-                <Cardlist list={filterRobo} />
+        console.log('render')
+        if(this.state.list.length===0){
+                return(<h1 className="tc green pa3">loading</h1>)
+        }else{
 
-            </div>
-        )
+            return (
+                <div className="tc"> 
+                    <SearchBox  searchText={this.onSearchChange} />
+                
+                    <Cardlist list={filterRobo} />
+    
+                </div>
+            )
+        }
+
+        
     }
 
 }
